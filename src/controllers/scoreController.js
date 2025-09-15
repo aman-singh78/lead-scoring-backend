@@ -4,21 +4,48 @@ import { calculateRuleScore } from "../services/ruleEngine.js";
 import { getAIIntent } from "../services/aiService.js";
 
 export const scoreLeads = async (req, res) => {
-  const offer = await Offer.findOne();
-  const leads = await Lead.find();
+  try {
+    const { leadId } = req.body;
 
-  for (let lead of leads) {
-    const ruleScore = calculateRuleScore(lead, offer);
-    const { intent, aiPoints, reasoning } = await getAIIntent(lead, offer);
-    lead.score = ruleScore + aiPoints;
-    lead.intent = intent;
-    lead.reasoning = reasoning;
-    await lead.save();
+    const lead = await Lead.findById(leadId);
+    if (!lead) {
+      return res.status(404).json({ message: "Lead not found" });
+    }
+
+    const offers = await Offer.find();
+    const results = [];
+
+    for (let offer of offers) {
+      const ruleScore = calculateRuleScore(lead, offer);
+      const { aiPoints, explanation } = await getAIIntent(lead, offer);
+      const finalScore = ruleScore + aiPoints;
+
+      results.push({
+        offerId: offer._id,
+        ruleScore,
+        aiPoints,
+        finalScore,
+        intentExplanation: explanation,
+      });
+    }
+
+    res.json({ leadId, scoredOffers: results });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error scoring lead", error: err.message });
   }
-  res.json({ message: "Scoring complete" });
 };
 
 export const getResults = async (req, res) => {
-  const leads = await Lead.find();
-  res.json(leads);
+  try {
+    const results = await ScoredLead.find()
+      .populate("lead")
+      .populate("scoredOffers.offerId");
+    res.json({ results });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ message: "Error fetching scored results", error: err.message });
+  }
 };

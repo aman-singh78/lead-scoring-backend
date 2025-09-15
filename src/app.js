@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api", offerRoutes);
-app.use("/api", leadRoutes);
+app.use("/api/leads", leadRoutes);
 app.use("/api", scoreRoutes);
 
 export default app;

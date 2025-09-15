@@ -5,6 +5,6 @@ import { uploadLeads } from "../controllers/leadController.js";
 const upload = multer({ dest: "uploads/" });
 const router = express.Router();
 
-router.post("/leads/upload", upload.single("file"), uploadLeads);
+router.post("/upload", upload.single("file"), uploadLeads);
 
 export default router;
