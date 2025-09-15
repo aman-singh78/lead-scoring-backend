@@ -1,5 +1,6 @@
 import express from "express";
 import { createOffer } from "../controllers/offerController.js";
+import { getOffers } from "../controllers/offerController.js";
 const router = express.Router();
 
 router.post("/offer", createOffer);
