@@ -5,6 +5,7 @@ A Node.js backend service that manages offers, leads, and lead scoring using bot
 ## Table of Contents
 
 - [Features](#features)
+- [Live API](#live-api)
 - [Getting Started](#getting-started)
 - [Configuration](#configuration)
 - [Project Structure](#project-structure)
@@ -18,8 +19,21 @@ A Node.js backend service that manages offers, leads, and lead scoring using bot
 - **Offer Management:** Create, update, and retrieve offers.
 - **Lead Management:** Upload leads through CSV and retrieve lead records.
 - **Lead Scoring:** Score leads using custom rule-based logic along with AI classification for intent.
-- **AI Integration:** Utilizes Cohere and OpenAI for lead buying intent analysis.
+- **AI Integration:** Utilizes Cohere's API for lead buying intent analysis.
 - **Database Connection:** Connects to MongoDB using Mongoose.
+
+## Live API
+
+The backend API is deployed on Vercel. You can access it here:
+
+**Base URL:** `https://backend-assignment-rb7juu635-aman-singh-thapas-projects.vercel.app`
+
+### Example Endpoints
+
+- `GET /` → Check API status (returns "API is running!")
+- `POST /api/leads/upload` → Upload a CSV of leads (file must be sent as `file`)
+- `GET /api/offers` → Retrieve all offers
+- `GET /api/scores` → Retrieve all scores
 
 ## Getting Started
 
@@ -43,7 +57,6 @@ A Node.js backend service that manages offers, leads, and lead scoring using bot
    PORT=3000
    MONGO_URI=your_mongodb_connection_string
    COHERE_API_KEY=your_cohere_api_key
-   OPENAI_API_KEY=your_openai_api_key
    ```
 
 4. **Start the Server:**
@@ -115,5 +128,5 @@ A Node.js backend service that manages offers, leads, and lead scoring using bot
 - **Backend:** Node.js, Express
 - **Database:** MongoDB with Mongoose
 - **File Handling:** Multer, csv-parser
-- **AI Integration:** Cohere AI and OpenAI
+- **AI Integration:** Cohere API for intent classification
 - **Environment Management:** dotenv
