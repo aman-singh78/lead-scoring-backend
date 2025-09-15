@@ -117,7 +117,3 @@ A Node.js backend service that manages offers, leads, and lead scoring using bot
 - **File Handling:** Multer, csv-parser
 - **AI Integration:** Cohere AI and OpenAI
 - **Environment Management:** dotenv
-
-## License
-
-This project is licensed under the
